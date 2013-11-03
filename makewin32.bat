@@ -1,0 +1,1 @@
+lcc -o game.gb src/game.c
