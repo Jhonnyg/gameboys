@@ -1,1 +1,1 @@
-lcc -o game.gb src/game.c
+lcc -o build/game.gb src/game.c
