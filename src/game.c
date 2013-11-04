@@ -6,6 +6,9 @@
 #include "../include/input.h"
 
 /* keyboard state stored in input.c */
+extern int key_start;
+extern int key_select;
+
 extern int key_a;
 extern int key_b;
 
@@ -38,6 +41,24 @@ void main()
 
         if ( IS_PRESSED(key_b) )        printf("KEY_PRESSED: B\n");
         else if ( IS_RELEASED(key_b) )  printf("KEY_RELEASED: B\n");
+
+        if ( IS_PRESSED(key_start) )        printf("KEY_PRESSED: START\n");
+        else if ( IS_RELEASED(key_start) )  printf("KEY_RELEASED: START\n");
+
+        if ( IS_PRESSED(key_select) )        printf("KEY_PRESSED: SELECT\n");
+        else if ( IS_RELEASED(key_select) )  printf("KEY_RELEASED: SELECT\n");
+
+        if ( IS_PRESSED(key_up) )        printf("KEY_PRESSED: UP\n");
+        else if ( IS_RELEASED(key_up) )  printf("KEY_RELEASED: UP\n");
+
+        if ( IS_PRESSED(key_down) )        printf("KEY_PRESSED: DOWN\n");
+        else if ( IS_RELEASED(key_down) )  printf("KEY_RELEASED: DOWN\n");
+
+        if ( IS_PRESSED(key_left) )        printf("KEY_PRESSED: LEFT\n");
+        else if ( IS_RELEASED(key_left) )  printf("KEY_RELEASED: LEFT\n");
+
+        if ( IS_PRESSED(key_right) )        printf("KEY_PRESSED: RIGHT\n");
+        else if ( IS_RELEASED(key_right) )  printf("KEY_RELEASED: RIGHT\n");
         
         frame++;
     }
