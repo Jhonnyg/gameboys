@@ -22,7 +22,7 @@ void init_background()
     int i = 0, j = 0;
     unsigned char _bktiles = { 1 };
 
-    set_bkg_data( 1,1, sprite_gonads);
+    set_bkg_data( 1,1, sprite_gonads );
 
     /* draw amazing background sprite 01 */
     for(i = 0; i < 16; i+=16)
