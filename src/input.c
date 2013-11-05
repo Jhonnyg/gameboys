@@ -78,3 +78,4 @@ void update_input( int state )
 		else key_right = KEY_NONE;
 	}
 }
+
