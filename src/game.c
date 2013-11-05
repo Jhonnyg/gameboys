@@ -17,14 +17,39 @@ extern int key_down;
 extern int key_left;
 extern int key_right;
 
+void init_background()
+{
+    int i = 0, j = 0;
+    unsigned char _bktiles = { 1 };
+
+    set_bkg_data( 1,1, sprite_gonads);
+
+    /* draw amazing background sprite 01 */
+    for(i = 0; i < 16; i+=16)
+        for(j = 0; j < 16; j+=16)
+            set_bkg_tiles(i, j, 1, 1, _bktiles);
+
+    /* display 2 screen */
+    SHOW_BKG;
+}
+
 void main()
 {
     /* martin timell tells the time */
     int frame = 0;
 
     /* pre-draw setup code */
+    // disable_interrupts();
+    // DISPLAY_OFF;
+    // LCDC_REG = 0x67;
+
+    /* set background */
+    // init_background();
+
     DISPLAY_ON;
+    
     enable_interrupts(); 
+
 
     /* gameloop */
     while(1) 
