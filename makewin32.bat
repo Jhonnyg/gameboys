@@ -1,3 +1,6 @@
+setlocal
+set PATH=%PATH%;gbdk/bin/
+
 :: compile game files
 lcc -Wa-l -Wl-m -Wl-j -c -o build/input.o src/input.c
 lcc -Wa-l -Wl-m -Wl-j -c -o build/game.o src/game.c
