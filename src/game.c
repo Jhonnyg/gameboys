@@ -2,9 +2,9 @@
 #include <stdio.h>
 
 /* game includes */
-#include "../include/sprites.h"
-#include "../include/input.h"
-#include "../include/sound.h"
+#include "sprites.h"
+#include "input.h"
+#include "sound.h"
 
 /* keyboard state stored in input.c */
 extern int key_start;

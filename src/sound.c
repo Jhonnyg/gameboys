@@ -1,4 +1,4 @@
-#include "../include/sound.h"
+#include "sound.h"
 
 struct sound_channel {
 	UBYTE tmp;

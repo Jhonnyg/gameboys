@@ -1,5 +1,5 @@
 #include <gb/gb.h>
-#include "../include/input.h"
+#include "input.h"
 
 /* global key state */
 int key_start 	= KEY_NONE;
