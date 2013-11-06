@@ -52,6 +52,7 @@ sprite alloc_sprite(int hoolabaloo)
 
 void free_sprite(sprite id)
 {
+    id += 0;
 }
 
 void show_sprite(sprite id)
