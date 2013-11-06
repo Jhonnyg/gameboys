@@ -29,9 +29,9 @@ enum SpriteLayout {
 };
 
 struct Sprite {
-    unsigned int x;
-    unsigned int y;
-    int id;
+    UINT16 x;
+    UINT16 y;
+    UINT16 id;
 
     enum SpriteLayout layout;
 };
