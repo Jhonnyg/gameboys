@@ -21,10 +21,11 @@ extern int key_right;
 
 
 /* TODO: TEMP YO */
-#define S_GUBBE (0xC0U)
-#define S_GONADS (0xC4U)
-#define S_EARTH0 (0xC8U)
-#define S_EARTH1 (0xCCU)
+#include "sprites.h"
+/*#define S_GUBBE (0xC0U)*/
+/*#define S_GONADS (0xC4U)*/
+/*#define S_EARTH0 (0xC8U)*/
+/*#define S_EARTH1 (0xCCU)*/
 
 void init_background()
 {
@@ -53,7 +54,7 @@ void main()
     BGP_REG = OBP0_REG = OBP1_REG = 0xE4U;
 
     init_sprites();
-    gubbe = alloc_sprite(S_GONADS);
+    gubbe = alloc_sprite(GUBBE);
 
     /* pre-draw setup code */
     // disable_interrupts();
@@ -87,10 +88,10 @@ void main()
         /*if ( IS_PRESSED(key_b) )        draw_sprite();*/
         /*else if ( IS_RELEASED(key_b) )  draw_sprite();*/
 
-        if ( IS_PRESSED(key_start) )        { gubbe = alloc_sprite(S_EARTH1); }
+        if ( IS_PRESSED(key_start) )        { gubbe = alloc_sprite(GUBBE); }
         /*else if ( IS_RELEASED(key_start) )  draw_sprite();*/
 
-        if ( IS_PRESSED(key_select) )        { gubbe = alloc_sprite(S_EARTH0); }
+        if ( IS_PRESSED(key_select) )        { gubbe = alloc_sprite(DUMLE); }
         /*else if ( IS_RELEASED(key_select) )  draw_sprite();*/
 
         if ( IS_PRESSED(key_up) )        shift_sprite(gubbe, 0, -2);

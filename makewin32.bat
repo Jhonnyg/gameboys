@@ -1,6 +1,9 @@
 setlocal
 set PATH=%PATH%;gbdk/bin/
 
+:: prepare generated sources
+python build/pack_sprites.py
+
 :: compile game files
 lcc -Iinclude -c -o build/input.o src/input.c
 lcc -Iinclude -c -o build/sound.o src/sound.c
