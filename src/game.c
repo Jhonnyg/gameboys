@@ -1,10 +1,11 @@
 #include <gb/gb.h>
+#include <gb/drawing.h>
 #include <stdio.h>
 
 /* game includes */
-#include "sprites.h"
-#include "input.h"
-#include "sound.h"
+#include "../include/sprites.h"
+#include "../include/input.h"
+#include "../include/sound.h"
 
 /* keyboard state stored in input.c */
 extern int key_start;
@@ -61,8 +62,25 @@ void draw_sprite()
             move_sprite(dude_s.id+1, dude_s.x, dude_s.y+8);
             move_sprite(dude_s.id+2, dude_s.x+8, dude_s.y);
             move_sprite(dude_s.id+3, dude_s.x+8, dude_s.y+8);
-
     }
+    return;
+}
+
+void draw_text(const char* text)
+{
+    const int x = 1;
+    const int y = 16;
+    const offset = 5;
+    const x1 = offset, y1 = GRAPHICS_HEIGHT - offset - 16;
+    const x2 = GRAPHICS_WIDTH - offset, y2 = GRAPHICS_HEIGHT - offset;
+    color(BLACK, WHITE, SOLID);
+    box(x1, y1, x2, y2, M_NOFILL);
+    color(LTGREY, WHITE, SOLID);
+    line(x1+1, y1+1, x2-1, y1 + 1);
+    line(x1+1, y2-1, x2-1, y2 - 1);
+    gotogxy(x, y);
+    color(BLACK, WHITE, SOLID);
+    gprintf(text);
 }
 
 void init_background()
@@ -146,6 +164,7 @@ void main()
     enable_interrupts(); 
 
 
+
     /* gameloop */
     while(1) 
     {
@@ -181,6 +200,9 @@ void main()
         /*else if ( IS_RELEASED(key_right) )  draw_sprite();*/
         
         draw_sprite();
+        
+        draw_text("Banana PANIC!");
+        
         frame++;
     }
 }
