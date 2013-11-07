@@ -23,7 +23,7 @@ $(OUT)/sprite_manager.o: src/sprite_manager.c $(GEN)/sprite_data.h
 $(OUT)/%.o: src/%.c
 	$(CC) $(CC_FLAGS) -c -o $@ $<
 
-build/game.gb: build/game.o build/input.o build/sound.o build/sprite_manager.o
+build/game.gb: build/game.o build/input.o build/sound.o build/sprite_manager.o build/text.o
 	$(CC) -o $@ $^
 
 clean:
