@@ -64,12 +64,12 @@ def main(args):
     with open(os.path.join(gen_dir, 'sprites.h'), 'w') as sprites:
         sprites.write("#ifndef SPRITES_H_\n#define SPRITES_H_\n\n")
         sprites.writelines(["#define %s 0x%02X\n" % (name, layout) for (name, layout) in defines])
-        sprites.write("\n#endif  // SPRITES_H_\n")
+        sprites.write("\n#endif  // SPRITES_H_\n\n")
 
     with open(os.path.join(gen_dir, 'sprite_data.h'), 'w') as sprite_data:
         sprite_data.write("#ifndef SPRITE_DATA_H_\n#define SPRITE_DATA_H_\n\n")
         sprite_data.write(hexify('sprite_data', tile_data))
-        sprite_data.write("\n#endif  // SPRITE_DATA_H_")
+        sprite_data.write("\n#endif  // SPRITE_DATA_H_\n\n")
 
 
 if __name__ == '__main__':
