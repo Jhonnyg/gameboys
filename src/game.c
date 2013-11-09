@@ -19,6 +19,9 @@ extern int key_down;
 extern int key_left;
 extern int key_right;
 
+int prev_key_start = 0;
+int prev_key_select = 0;
+
 
 /* TODO: TEMP YO */
 #include "sprites.h"
@@ -48,13 +51,21 @@ void main()
 {
     /* martin timell tells the time */
     int frame = 0;
-    sprite gubbe;
+    Sprite* gubbe;
+    Sprite* snubbe;
+    Sprite* sture;
 
     /* Set palettes */
     BGP_REG = OBP0_REG = OBP1_REG = 0xE4U;
 
     init_sprites();
     gubbe = alloc_sprite(GUBBE);
+    snubbe = alloc_sprite(GUBBE);
+    sture = alloc_sprite(DUMLE);
+
+    put_sprite(gubbe, 30, 30);
+    put_sprite(snubbe, 60, 60);
+    put_sprite(sture, 60, 90);
 
     /* pre-draw setup code */
     // disable_interrupts();
@@ -71,6 +82,7 @@ void main()
     enable_interrupts();
 
     update_sprites();
+    draw_text("Banana PANIC!");
 
     /* gameloop */
     while(1)
@@ -85,13 +97,21 @@ void main()
         /*if ( IS_PRESSED(key_a) )        draw_sprite();*/
         /*else if ( IS_RELEASED(key_a) )  draw_sprite();*/
 
-        /*if ( IS_PRESSED(key_b) )        draw_sprite();*/
+        if ( IS_PRESSED(key_b) )        printf("g: %x\n", gubbe->id);
         /*else if ( IS_RELEASED(key_b) )  draw_sprite();*/
 
-        if ( IS_PRESSED(key_start) )        { gubbe = alloc_sprite(GUBBE); }
+        if (IS_PRESSED(key_start) && (key_start ^ prev_key_start)) {
+            free_sprite(gubbe);
+            gubbe = alloc_sprite(GUBBE);
+            put_sprite(gubbe, 90, 90);
+        }
         /*else if ( IS_RELEASED(key_start) )  draw_sprite();*/
 
-        if ( IS_PRESSED(key_select) )        { gubbe = alloc_sprite(DUMLE); }
+        if (IS_PRESSED(key_select)) {
+            free_sprite(gubbe);
+            gubbe = alloc_sprite(DUMLE);
+            put_sprite(gubbe, 90, 90);
+        }
         /*else if ( IS_RELEASED(key_select) )  draw_sprite();*/
 
         if ( IS_PRESSED(key_up) )        shift_sprite(gubbe, 0, -2);
@@ -100,15 +120,15 @@ void main()
         if ( IS_PRESSED(key_down) )        shift_sprite(gubbe, 0, 2);
         /*[>else if ( IS_RELEASED(key_down) )  draw_sprite();<]*/
 
-        if ( IS_PRESSED(key_left) )        shift_sprite(gubbe, -2, 0);
+        if ( IS_PRESSED(key_left) )         shift_sprite(gubbe, -2, 0);
         /*[>else if ( IS_RELEASED(key_left) )  draw_sprite();<]*/
 
         if ( IS_PRESSED(key_right) )        shift_sprite(gubbe, 2, 0);
         /*else if ( IS_RELEASED(key_right) )  draw_sprite();*/
 
+        prev_key_start = key_start;
         /*draw_sprite(0);*/
         update_sprites();
-        draw_text("Banana PANIC!");
         frame++;
     }
 }

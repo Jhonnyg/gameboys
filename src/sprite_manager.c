@@ -1,16 +1,19 @@
 #include "sprite_manager.h"
 
-#include "sprite_data.h"
-
-#include <stdio.h>
 #include <gb/gb.h>
+#include <string.h>
 
-struct Sprite sprites[40] = {
-    { 0, 1, 0x30, 0x30, SPRITE16x16 }
-};
+#include "sprite_data.h"
+#include "quirks.h"
 
-/*int num_sprites = sizeof(sprites) / sizeof(struct Sprite);*/
-int num_sprites = 1;
+
+int8 allocated_tiles[40] = { -1 };
+int8 allocation_index = 0;
+int8 num_allocated_tiles = 0;
+
+Sprite sprites[40] = { -1 };
+int8 sprites_index = 0;
+
 
 void init_sprites()
 {
@@ -21,105 +24,176 @@ void init_sprites()
     set_sprite_data(0, 16, sprite_data);
 }
 
-sprite alloc_sprite(int hoolabaloo)
+Sprite* alloc_sprite(uint8 hoolabaloo)
 {
-    UINT8 addr = hoolabaloo & 0x3FU;
-    UINT8 type = hoolabaloo >> 6;
-    int new_sprite = -1;
+    Sprite* s;
 
-    switch (type)
+    int8 pending_allocations[4];
+    int8 pending_index = 0;
+    int8 required_tiles;
+
+    uint8 addr = hoolabaloo & 0x3FU;
+    uint8 layout = hoolabaloo >> 6;
+    uint8 i;
+
+
+    required_tiles = layout + 1;
+    if (required_tiles == 3)
+        required_tiles = 2;
+
+    if (num_allocated_tiles + required_tiles > 40)
+        return -1;
+
+
+    for (i=allocation_index; i<sizeof(allocated_tiles); i += 1)
+        if (allocated_tiles[i] != i) {
+            pending_allocations[pending_index] = i;
+            pending_index += 1;
+
+            if (pending_index == required_tiles)
+                goto alloc_complete;
+        }
+
+    for (i=0; i<allocation_index; i += 1)
+        if (allocated_tiles[i] != i) {
+            pending_allocations[pending_index] = i;
+            pending_index += 1;
+
+            if (pending_index == required_tiles)
+                goto alloc_complete;
+        }
+
+    return -1;
+
+alloc_complete:
+    allocation_index = i+1;
+
+    for (i=sprites_index; i<40; i += 1)
+        if (sprites[i].id != i)
+            goto write_struct;
+
+    for (i=0; i<sprites_index; i += 1)
+        if (sprites[i].id != i)
+            goto write_struct;
+
+    return -1;
+
+write_struct:
+    sprites_index = i+1;
+
+    s = &sprites[i];
+    s->id = i;
+    s->visible = 1;
+    s->x = 0;
+    s->y = 0;
+    s->layout = layout;
+    memcpy(s->tiles, pending_allocations, required_tiles);
+
+    switch (layout)
     {
-        case 3:
-            set_sprite_prop(3, 0x00);
-            set_sprite_tile(3, addr+3);
-        case 2:
-            set_sprite_prop(2, 0x00);
-            set_sprite_tile(2, addr+2);
-        case 1:
-            set_sprite_prop(1, 0x00);
-            set_sprite_tile(1, addr+1);
-        case 0:
-            set_sprite_prop(0, 0x00);
-            set_sprite_tile(0, addr);
+        case SPRITE16x16:
+            set_sprite_prop(pending_allocations[3], 0x00);
+            set_sprite_tile(pending_allocations[3], addr+3);
+            set_sprite_prop(pending_allocations[2], 0x00);
+            set_sprite_tile(pending_allocations[2], addr+2);
+            allocated_tiles[pending_allocations[3]] = pending_allocations[3];
+            allocated_tiles[pending_allocations[2]] = pending_allocations[2];
+        case SPRITE16x8:
+        case SPRITE8x16:
+            set_sprite_prop(pending_allocations[1], 0x00);
+            set_sprite_tile(pending_allocations[1], addr+1);
+            allocated_tiles[pending_allocations[1]] = pending_allocations[1];
+        case SPRITE8x8:
+            set_sprite_prop(pending_allocations[0], 0x00);
+            set_sprite_tile(pending_allocations[0], addr);
+            allocated_tiles[pending_allocations[0]] = pending_allocations[0];
     }
 
-    /* TODO: Actually allocate :S */
-    new_sprite = 0;
-    sprites[new_sprite].layout = type;
+    num_allocated_tiles += required_tiles;
+    touch(s->layout);
 
-    return new_sprite;
+    return s;
 }
 
-void free_sprite(sprite id)
+void free_sprite(Sprite* sprite)
 {
-    id += 0;
+    sprites_index = sprite->id;
+    sprite->id = -1;
+
+    switch (sprite->layout)
+    {
+        case SPRITE16x16:
+            move_sprite(sprite->tiles[3], 0, 0);
+            move_sprite(sprite->tiles[2], 0, 0);
+            allocated_tiles[sprite->tiles[3]] = -1;
+            allocated_tiles[sprite->tiles[2]] = -1;
+            num_allocated_tiles -= 2;
+        case SPRITE16x8:
+        case SPRITE8x16:
+            move_sprite(sprite->tiles[1], 0, 0);
+            allocated_tiles[sprite->tiles[1]] = -1;
+            num_allocated_tiles -= 1;
+        case SPRITE8x8:
+            move_sprite(sprite->tiles[0], 0, 0);
+            allocated_tiles[sprite->tiles[0]] = -1;
+            num_allocated_tiles -= 1;
+    }
 }
 
-void show_sprite(sprite id)
+void show_sprite(Sprite* sprite)
 {
-    sprites[id].visible = 1;
+    sprite->visible = 1;
 }
 
-void hide_sprite(sprite id)
+void hide_sprite(Sprite* sprite)
 {
-    sprites[id].visible = 0;
+    sprite->visible = 0;
 }
 
-void shift_sprite(sprite id, int dx, int dy)
+void shift_sprite(Sprite* sprite, int dx, int dy)
 {
-    sprites[id].x += dx;
-    sprites[id].y += dy;
+    sprite->x += dx;
+    sprite->y += dy;
 }
 
-void put_sprite(sprite id, int x, int y)
+void put_sprite(Sprite* sprite, int x, int y)
 {
-    sprites[id].x = x;
-    sprites[id].y = y;
+    sprite->x = x;
+    sprite->y = y;
 }
 
 void update_sprites()
 {
-    int i;
-    for (i=0; i!=num_sprites; i += 1)
+    uint8 i;
+    int base_x;
+    int base_y;
+
+    for (i=0; i!=40; i += 1)
     {
+        if (sprites[i].id != i)
+            continue;
+
+        if (sprites[i].visible) {
+            base_x = sprites[i].x;
+            base_y = sprites[i].y;
+        } else {
+            base_x = 0;
+            base_y = 0;
+        }
+
+        move_sprite(sprites[i].tiles[0], base_x, base_y);
+
         switch (sprites[i].layout)
         {
-            case SPRITE8x8:
-                if (sprites[i].visible)
-                    move_sprite(sprites[i].id, sprites[i].x, sprites[i].y);
-                else
-                    move_sprite(sprites[i].id, -128, -128);
-                break;
-            case SPRITE8x16:
-                if (sprites[i].visible) {
-                    move_sprite(sprites[i].id, sprites[i].x, sprites[i].y);
-                    move_sprite(sprites[i].id+1, sprites[i].x, sprites[i].y+8);
-                } else {
-                    move_sprite(sprites[i].id, -128, -128);
-                    move_sprite(sprites[i].id+1, -128, -128);
-                }
-                break;
             case SPRITE16x8:
-                if (sprites[i].visible) {
-                    move_sprite(sprites[i].id, sprites[i].x, sprites[i].y);
-                    move_sprite(sprites[i].id+1, sprites[i].x+8, sprites[i].y);
-                } else {
-                    move_sprite(sprites[i].id, -128, -128);
-                    move_sprite(sprites[i].id+1, -128, -128);
-                }
+                move_sprite(sprites[i].tiles[1], base_x+8, base_y);
                 break;
             case SPRITE16x16:
-                if (sprites[i].visible) {
-                    move_sprite(sprites[i].id, sprites[i].x, sprites[i].y);
-                    move_sprite(sprites[i].id+1, sprites[i].x, sprites[i].y+8);
-                    move_sprite(sprites[i].id+2, sprites[i].x+8, sprites[i].y);
-                    move_sprite(sprites[i].id+3, sprites[i].x+8, sprites[i].y+8);
-                } else {
-                    move_sprite(sprites[i].id, -128, -128);
-                    move_sprite(sprites[i].id+1, -128, -128);
-                    move_sprite(sprites[i].id+2, -128, -128);
-                    move_sprite(sprites[i].id+3, -128, -128);
-                }
+                move_sprite(sprites[i].tiles[2], base_x+8, base_y);
+                move_sprite(sprites[i].tiles[3], base_x+8, base_y+8);
+            case SPRITE8x16:
+                move_sprite(sprites[i].tiles[1], base_x, base_y+8);
+
         }
     }
 }

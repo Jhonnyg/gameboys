@@ -8,7 +8,7 @@
 #ifndef SPRITE_MANAGER_H_
 #define SPRITE_MANAGER_H_
 
-typedef int sprite;
+#include "typedefs.h"
 
 enum SpriteLayout {
     SPRITE8x8,
@@ -17,15 +17,18 @@ enum SpriteLayout {
     SPRITE16x16
 };
 
-struct Sprite {
-    unsigned int id;
+typedef struct s_sprite Sprite;
+struct s_sprite {
+    int8 id;
 
-    unsigned int visible;
+    int8 visible;
 
-    unsigned int x;
-    unsigned int y;
+    uint8 x;
+    uint8 y;
 
     enum SpriteLayout layout;
+
+    int8 tiles[4];
 };
 
 void init_sprites();
@@ -35,14 +38,15 @@ void init_sprites();
  *
  * Returns -1 when :(
  */
-sprite alloc_sprite(int hoolabaloo);
-void free_sprite(sprite id);
 
-void show_sprite(sprite id);
-void hide_sprite(sprite id);
+Sprite* alloc_sprite(uint8 hoolabaloo);
+void free_sprite(Sprite* sprite);
 
-void shift_sprite(sprite id, int dx, int dy);
-void put_sprite(sprite id, int x, int y);
+void show_sprite(Sprite* sprite);
+void hide_sprite(Sprite* sprite);
+
+void shift_sprite(Sprite* sprite, int dx, int dy);
+void put_sprite(Sprite* sprite, int x, int y);
 
 void update_sprites();
 
