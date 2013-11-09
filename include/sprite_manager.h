@@ -39,7 +39,7 @@ void init_sprites();
  * Returns -1 when :(
  */
 
-Sprite* alloc_sprite(uint8 hoolabaloo);
+Sprite* alloc_sprite(uint8 sprite_code);
 void free_sprite(Sprite* sprite);
 
 void show_sprite(Sprite* sprite);

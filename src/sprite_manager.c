@@ -3,6 +3,7 @@
 #include <gb/gb.h>
 #include <string.h>
 
+#include "assert.h"
 #include "sprite_data.h"
 #include "quirks.h"
 
@@ -24,7 +25,7 @@ void init_sprites()
     set_sprite_data(0, 16, sprite_data);
 }
 
-Sprite* alloc_sprite(uint8 hoolabaloo)
+Sprite* alloc_sprite(uint8 sprite_code)
 {
     Sprite* s;
 
@@ -32,8 +33,8 @@ Sprite* alloc_sprite(uint8 hoolabaloo)
     int8 pending_index = 0;
     int8 required_tiles;
 
-    uint8 addr = hoolabaloo & 0x3FU;
-    uint8 layout = hoolabaloo >> 6;
+    uint8 addr = sprite_code & 0x3FU;
+    uint8 layout = sprite_code >> 6;
     uint8 i;
 
 
@@ -43,7 +44,6 @@ Sprite* alloc_sprite(uint8 hoolabaloo)
 
     if (num_allocated_tiles + required_tiles > 40)
         return -1;
-
 
     for (i=allocation_index; i<sizeof(allocated_tiles); i += 1)
         if (allocated_tiles[i] != i) {
@@ -63,6 +63,7 @@ Sprite* alloc_sprite(uint8 hoolabaloo)
                 goto alloc_complete;
         }
 
+    NOT_REACHED;
     return -1;
 
 alloc_complete:
@@ -76,6 +77,7 @@ alloc_complete:
         if (sprites[i].id != i)
             goto write_struct;
 
+    NOT_REACHED;
     return -1;
 
 write_struct:
