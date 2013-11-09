@@ -76,7 +76,7 @@ void main()
     /* set background */
     // init_background();
 
-    sound_on();
+    SOUND_ON; 
 
     DISPLAY_ON;
 
@@ -87,12 +87,10 @@ void main()
 
     /* music init & run */
 
-    /*
     gbt_play(test_Data, 2, 7 );
     gbt_loop(0);
 
     add_VBL(gbt_update);
-    */
 
     /* gameloop */
     while(1)

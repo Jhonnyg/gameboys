@@ -10,21 +10,9 @@ struct sound_container {
 };
 
 const struct sound_container sound_effects[] = {
-	{"SOUND_FX_TEST",0xF3,0x10,C3}, // guess!
+	{"SOUND_FX_TEST",0xF3,0xFF,C3}, // guess!
 	{NULL,0,0,0,0}
 };
-
-/*
-struct sound_channel {
-	UBYTE tmp;
-};
-
-const struct sound_channel channels[] = { 
-	{0}, 	// Square 1
-	{0}, 	// Square 2 
-	{0}, 	// Waveform
-	{0} 	// Noise
-}; */
 
 void sound_on()
 {
