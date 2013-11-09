@@ -9,7 +9,10 @@ GEN = $(OUT)/gen
 
 TARGET = $(OUT)/$(EXE_NAME)
 
+all: CC_FLAGS += -DDEBUG
 all: $(TARGET)
+
+release: $(TARGET)
 
 $(GEN)/sprites.h: $(OUT)/pack_sprites.py assets/config.json
 	mkdir -p $(GEN)
