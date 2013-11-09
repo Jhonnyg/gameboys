@@ -1,5 +1,6 @@
 { "sprites": [
     { "name" : "DUMLE", "file_name" : "dumle.bin", "layout": "16x16" },
-    { "name" : "GUBBE", "file_name" : "gubbe.bin", "layout": "16x16" }
+    { "name" : "GUBBE", "file_name" : "gubbe.bin", "layout": "16x16" },
+    { "name" : "LITEN_GUBBE", "file_name" : "liten_gubbe.bin", "layout": "8x16" }
   ]
 }
