@@ -1,0 +1,1 @@
+call "tools/bgb.exe" build/game.gb

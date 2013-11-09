@@ -17,3 +17,4 @@ void draw_text(const char* text)
     color(BLACK, WHITE, SOLID); 
     gprintf(text);
 }
+

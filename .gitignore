@@ -1,0 +1,3 @@
+build/gen
+build/*.gb
+tools/gbtd.ini
