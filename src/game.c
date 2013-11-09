@@ -7,6 +7,11 @@
 #include "sound.h"
 #include "text.h"
 
+/* music includes */
+#include "gbt_player.h"
+
+extern const unsigned char * test_Data[];
+
 /* keyboard state stored in input.c */
 extern int key_start;
 extern int key_select;
@@ -70,6 +75,12 @@ void main()
     enable_interrupts();
 
     update_sprites();
+
+    /* music init & run */
+    gbt_play(test_Data, 2, 7 );
+    gbt_loop(0);
+
+    add_VBL(gbt_update);
 
     /* gameloop */
     while(1)
