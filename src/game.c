@@ -6,6 +6,7 @@
 #include "input.h"
 #include "sound.h"
 #include "text.h"
+#include "splash.h"
 
 /* music includes */
 #include "gbt_player.h"
@@ -60,6 +61,9 @@ void main()
     BGP_REG = OBP0_REG = OBP1_REG = 0xE4U;
 
     init_sprites();
+
+    run_splash();
+
     gubbe = alloc_sprite(GUBBE);
     snubbe = alloc_sprite(GUBBE);
     sture = alloc_sprite(DUMLE);
