@@ -11,71 +11,30 @@ int key_down 	= KEY_NONE;
 int key_left 	= KEY_NONE;
 int key_right 	= KEY_NONE;
 
+void update_key( int state, int *key, unsigned int key_enum )
+{
+	if ( state & key_enum ) 
+	{
+		if ( (*key) == KEY_NONE )
+			 (*key) = KEY_PRESS;
+		else (*key) = KEY_DOWN;
+	} else 
+	{
+		if ( (*key) == KEY_PRESS ) 
+			 (*key) = KEY_RELEASE;
+		else (*key) = KEY_NONE;
+	}
+}
+
 void update_input( int state )
 {
-	/* warning: copy-paste code */
-	if ( state & J_START ) key_start = KEY_PRESS;
-	else 
-	{
-		if ( key_start == KEY_PRESS ) 
-			 key_start = KEY_RELEASE;
-		else key_start = KEY_NONE;
-	}
-
-	if ( state & J_SELECT ) key_select = KEY_PRESS;
-	else 
-	{
-		if ( key_select == KEY_PRESS ) 
-			 key_select = KEY_RELEASE;
-		else key_select = KEY_NONE;
-	}
-
-	if ( state & J_B ) key_b = KEY_PRESS;
-	else 
-	{
-		if ( key_b == KEY_PRESS ) 
-			 key_b = KEY_RELEASE;
-		else key_b = KEY_NONE;
-	}
-
-	if ( state & J_A ) key_a = KEY_PRESS;
-	else 
-	{
-		if ( key_a == KEY_PRESS ) 
-			 key_a = KEY_RELEASE;
-		else key_a = KEY_NONE;
-	}
-
-	if ( state & J_DOWN ) key_down = KEY_PRESS;
-	else 
-	{
-		if ( key_down == KEY_PRESS ) 
-			 key_down = KEY_RELEASE;
-		else key_down = KEY_NONE;
-	}
-
-	if ( state & J_UP ) key_up = KEY_PRESS;
-	else 
-	{
-		if ( key_up == KEY_PRESS ) 
-			 key_up = KEY_RELEASE;
-		else key_up = KEY_NONE;
-	}
-
-	if ( state & J_LEFT ) key_left = KEY_PRESS;
-	else 
-	{
-		if ( key_left == KEY_PRESS ) 
-			 key_left = KEY_RELEASE;
-		else key_left = KEY_NONE;
-	}
-
-	if ( state & J_RIGHT ) key_right = KEY_PRESS;
-	else 
-	{
-		if ( key_right == KEY_PRESS ) 
-			 key_right = KEY_RELEASE;
-		else key_right = KEY_NONE;
-	}
+	update_key(state,&key_start,J_START);
+	update_key(state,&key_select,J_SELECT);
+	update_key(state,&key_a,J_A);
+	update_key(state,&key_b,J_B);
+	update_key(state,&key_up,J_UP);
+	update_key(state,&key_down,J_DOWN);
+	update_key(state,&key_left,J_LEFT);
+	update_key(state,&key_right,J_RIGHT);
 }
 

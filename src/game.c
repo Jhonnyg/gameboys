@@ -92,34 +92,35 @@ void main()
         /* update input "state" */
         update_input( joypad() );
 
-        /* deal with buttons bro */
-        /*if ( IS_PRESSED(key_a) )        draw_sprite();*/
-        /*else if ( IS_RELEASED(key_a) )  draw_sprite();*/
+        /* INPUT STATES:
+         * IS_PRESSED - is key pressed for the first time this frame?
+         * IS_DOWN - is key down this frame?
+         * IS_RELEASED - is key released this frame?
+         */
 
-        /*if ( IS_PRESSED(key_b) )        draw_sprite();*/
-        /*else if ( IS_RELEASED(key_b) )  draw_sprite();*/
-
-        if ( IS_PRESSED(key_start) )        { gubbe = alloc_sprite(GUBBE); }
+        if ( IS_DOWN(key_start) )        { gubbe = alloc_sprite(GUBBE); }
         /*else if ( IS_RELEASED(key_start) )  draw_sprite();*/
 
-        if ( IS_PRESSED(key_select) )        { gubbe = alloc_sprite(DUMLE); }
+        if ( IS_DOWN(key_select) )        { gubbe = alloc_sprite(DUMLE); }
         /*else if ( IS_RELEASED(key_select) )  draw_sprite();*/
 
-        if ( IS_PRESSED(key_up) )        shift_sprite(gubbe, 0, -2);
+        if ( IS_DOWN(key_up) )        shift_sprite(gubbe, 0, -2);
         /*[>else if ( IS_RELEASED(key_up) )  draw_sprite();<]*/
 
-        if ( IS_PRESSED(key_down) )        shift_sprite(gubbe, 0, 2);
+        if ( IS_DOWN(key_down) )        shift_sprite(gubbe, 0, 2);
         /*[>else if ( IS_RELEASED(key_down) )  draw_sprite();<]*/
 
-        if ( IS_PRESSED(key_left) )        shift_sprite(gubbe, -2, 0);
+        if ( IS_DOWN(key_left) )        shift_sprite(gubbe, -2, 0);
         /*[>else if ( IS_RELEASED(key_left) )  draw_sprite();<]*/
 
-        if ( IS_PRESSED(key_right) )        shift_sprite(gubbe, 2, 0);
+        if ( IS_DOWN(key_right) )        shift_sprite(gubbe, 2, 0);
         /*else if ( IS_RELEASED(key_right) )  draw_sprite();*/
 
         /*draw_sprite(0);*/
         update_sprites();
+
         draw_text("Banana PANIC!");
+
         frame++;
     }
 }
