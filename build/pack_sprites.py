@@ -34,6 +34,11 @@ def main(args):
     assets_dir = os.path.normpath(
         os.path.join(build_dir, os.path.pardir, 'assets'))
 
+    try:
+        os.mkdir(gen_dir)
+    except:
+        pass
+
     config_file_path = os.path.join(assets_dir, 'config.json')
 
     layout_map = {

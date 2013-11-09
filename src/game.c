@@ -7,6 +7,11 @@
 #include "sound.h"
 #include "text.h"
 
+/* music includes */
+#include "gbt_player.h"
+
+extern const unsigned char * test_Data[];
+
 /* keyboard state stored in input.c */
 extern int key_start;
 extern int key_select;
@@ -18,10 +23,6 @@ extern int key_up;
 extern int key_down;
 extern int key_left;
 extern int key_right;
-
-int prev_key_start = 0;
-int prev_key_select = 0;
-
 
 /* TODO: TEMP YO */
 #include "sprites.h"
@@ -84,6 +85,15 @@ void main()
     update_sprites();
     draw_text("Banana PANIC!");
 
+    /* music init & run */
+
+    /*
+    gbt_play(test_Data, 2, 7 );
+    gbt_loop(0);
+
+    add_VBL(gbt_update);
+    */
+
     /* gameloop */
     while(1)
     {
@@ -93,14 +103,16 @@ void main()
         /* update input "state" */
         update_input( joypad() );
 
-        /* deal with buttons bro */
-        /*if ( IS_PRESSED(key_a) )        draw_sprite();*/
-        /*else if ( IS_RELEASED(key_a) )  draw_sprite();*/
+        /* INPUT STATES:
+         * IS_PRESSED - is key pressed for the first time this frame?
+         * IS_DOWN - is key down this frame?
+         * IS_RELEASED - is key released this frame?
+         */
 
         if ( IS_PRESSED(key_b) )        printf("g: %x\n", gubbe->id);
         /*else if ( IS_RELEASED(key_b) )  draw_sprite();*/
 
-        if (IS_PRESSED(key_start) && (key_start ^ prev_key_start)) {
+        if (IS_PRESSED(key_start)) {
             free_sprite(gubbe);
             gubbe = alloc_sprite(GUBBE);
             put_sprite(gubbe, 90, 90);
@@ -114,21 +126,25 @@ void main()
         }
         /*else if ( IS_RELEASED(key_select) )  draw_sprite();*/
 
-        if ( IS_PRESSED(key_up) )        shift_sprite(gubbe, 0, -2);
+        if ( IS_DOWN(key_up) )        shift_sprite(gubbe, 0, -2);
         /*[>else if ( IS_RELEASED(key_up) )  draw_sprite();<]*/
 
-        if ( IS_PRESSED(key_down) )        shift_sprite(gubbe, 0, 2);
+        if ( IS_DOWN(key_down) )        shift_sprite(gubbe, 0, 2);
         /*[>else if ( IS_RELEASED(key_down) )  draw_sprite();<]*/
 
-        if ( IS_PRESSED(key_left) )         shift_sprite(gubbe, -2, 0);
+        if ( IS_DOWN(key_left) )         shift_sprite(gubbe, -2, 0);
         /*[>else if ( IS_RELEASED(key_left) )  draw_sprite();<]*/
 
-        if ( IS_PRESSED(key_right) )        shift_sprite(gubbe, 2, 0);
+        if ( IS_DOWN(key_right) )        shift_sprite(gubbe, 2, 0);
         /*else if ( IS_RELEASED(key_right) )  draw_sprite();*/
 
-        prev_key_start = key_start;
+
+        if (IS_PRESSED(key_a))
+            play_effect( SOUND_FX_TEST );
+
         /*draw_sprite(0);*/
         update_sprites();
+
         frame++;
     }
 }

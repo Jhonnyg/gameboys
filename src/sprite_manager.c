@@ -12,7 +12,7 @@ int8 allocated_tiles[40] = { -1 };
 int8 allocation_index = 0;
 int8 num_allocated_tiles = 0;
 
-Sprite sprites[40] = { -1 };
+Sprite sprites[40]; // = { -1 };
 int8 sprites_index = 0;
 
 
