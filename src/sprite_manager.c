@@ -1,6 +1,6 @@
 #include "sprite_manager.h"
 
-#include "sprites.h"
+#include "sprite_data.h"
 
 #include <stdio.h>
 #include <gb/gb.h>
