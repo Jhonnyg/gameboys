@@ -20,6 +20,8 @@ void run_splash()
     Sprite* ddL = alloc_sprite(DUNG_L);
     Sprite* ddR = alloc_sprite(DUNG_R);
 
+    Sprite* yr = alloc_sprite(YEAR);
+
 	put_sprite(gbL, 144, 40);
 	put_sprite(gbR, 144 + 16, 40);
 	put_sprite(gobbe, 138, 42);
@@ -29,6 +31,8 @@ void run_splash()
 
 	put_sprite(ddL, 154 + 16, 70);
 	put_sprite(ddR, 154 + 16 + 16, 70);
+
+	put_sprite(yr, 10, 140);
 
 	count = 256;
 	while(count > 0)
@@ -59,6 +63,7 @@ void run_splash()
 	free_sprite(ddL);
 	free_sprite(ddR);
 	free_sprite(gobbe);
+	free_sprite(yr);
 
 	return;
 }
