@@ -32,7 +32,7 @@ void run_splash()
 	put_sprite(ddL, 154 + 16, 70);
 	put_sprite(ddR, 154 + 16 + 16, 70);
 
-	put_sprite(yr, 10, 140);
+	put_sprite(yr, 154 + 16 +36, 70);
 
 	count = 256;
 	while(count > 0)
@@ -51,6 +51,7 @@ void run_splash()
 		{
 			shift_sprite(ddL, -1, 0);
 			shift_sprite(ddR, -1, 0);
+			shift_sprite(yr, -1, 0);
 		}
 		update_sprites(0);
 		count--;
