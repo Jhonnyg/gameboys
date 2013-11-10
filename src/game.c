@@ -68,14 +68,16 @@ void main()
 
     run_splash();
 
-    gubbe = alloc_sprite(LITEN_GUBBE);
-    snubbe = alloc_sprite(GUBBE);
+    gubbe = alloc_sprite(DUDETTE);
+    snubbe = alloc_sprite(LITEN_GUBBE);
     sture = alloc_sprite(DUMLE);
 
 
     put_sprite(gubbe, 30, 30);
     put_sprite(snubbe, 60, 60);
     put_sprite(sture, 60, 90);
+
+    start_animation(snubbe, 0);
 
     /* pre-draw setup code */
     // disable_interrupts();

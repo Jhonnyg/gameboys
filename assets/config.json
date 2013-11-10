@@ -1,4 +1,5 @@
 { "sprites": [
+    { "name" : "DUDETTE", "file_name" : "dudette.bin", "layout": "16x16"},
     { "name" : "LITEN_GUBBE", "file_name" : "liten_gubbe.bin", "layout": "8x16", "frames" : 5 },
     { "name" : "LITEN_GUMMA", "file_name" : "liten_gumma_med_skugga.bin", "layout": "8x16" },
     { "name" : "GAMEBOYS_L", "file_name" : "gameboys_left.bin", "layout": "16x16" },
