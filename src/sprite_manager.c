@@ -27,6 +27,7 @@ void init_sprites()
     SPRITES_8x8;
     SHOW_SPRITES;
 
+    SWITCH_ROM_MBC1(3);
     set_sprite_data(0, sizeof(sprite_data)/16, sprite_data);
 }
 

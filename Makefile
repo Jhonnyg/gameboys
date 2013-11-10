@@ -18,7 +18,7 @@ release: $(TARGET)
 
 C_SOURCES = $(notdir $(wildcard src/*.c assets/*.c))
 ASM_SOURCES = $(notdir $(wildcard src/*.asm))
-GEN_OBJECTS = sprite_data.o
+GEN_OBJECTS = sprite_data.o map_data.o
 OBJECTS = $(addprefix $(OUT)/, $(C_SOURCES:%.c=%.o) $(ASM_SOURCES:%.asm=%.o) $(GEN_OBJECTS))
 BINS = $(wildcard assets/*.bin)
 
@@ -27,8 +27,12 @@ BINS = $(wildcard assets/*.bin)
 # _CODE_1: gbt_player_bank1.asm, declared in .asm
 # _CODE_2: output.o (sound data, declared in .c)
 # _CODE_3: sprite_data.o
+# _CODE_4: map_data.o
+# _CODE_5: splash.o
 
-$(OUT)/sprite_data.o: CCFLAGS += -Wf-ba3
+$(OUT)/sprite_data.o: CCFLAGS += -Wf-bo3
+$(OUT)/map_data.o: CCFLAGS += -Wf-bo4
+$(OUT)/splash.o: CCFLAGS += -Wf-bo5
 
 # Custom dependencies
 $(OUT)/splash.o: $(GEN)/sprites.h
