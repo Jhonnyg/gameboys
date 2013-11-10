@@ -62,7 +62,7 @@ def main(args):
             tile_data += bin_data
 
             layout = layout_map[s['layout']]
-            defines.append((s['name'], layout << 6 | int(start/kTileSize)))
+            defines.append((s['name'], (layout << 6) | int(start/kTileSize)))
 
             start += len(bin_data)
 

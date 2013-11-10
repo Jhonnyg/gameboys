@@ -1,12 +1,12 @@
 { "sprites": [
-    { "name" : "DUMLE", "file_name" : "dumle.bin", "layout": "16x16" },
-    { "name" : "GUBBE", "file_name" : "gubbe.bin", "layout": "16x16" },
     { "name" : "LITEN_GUBBE", "file_name" : "liten_gubbe.bin", "layout": "8x16" },
     { "name" : "GAMEBOYS_L", "file_name" : "gameboys_left.bin", "layout": "16x16" },
     { "name" : "GAMEBOYS_R", "file_name" : "gameboys_right.bin", "layout": "16x16" },
     { "name" : "PRESENTS_L", "file_name" : "presents_left.bin", "layout": "16x16" },
     { "name" : "PRESENTS_R", "file_name" : "presents_right.bin", "layout": "16x16" },
     { "name" : "DUNG_L", "file_name" : "dungeon_dudette_left.bin", "layout": "16x16" },
-    { "name" : "DUNG_R", "file_name" : "dungeon_dudette_right.bin", "layout": "16x16" }
+    { "name" : "DUNG_R", "file_name" : "dungeon_dudette_right.bin", "layout": "16x16" },
+    { "name" : "DUMLE", "file_name" : "dumle.bin", "layout": "16x16" },
+    { "name" : "GUBBE", "file_name" : "gubbe.bin", "layout": "16x16" }
   ]
 }

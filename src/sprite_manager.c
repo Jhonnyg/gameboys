@@ -22,7 +22,7 @@ void init_sprites()
     SPRITES_8x8;
     SHOW_SPRITES;
 
-    set_sprite_data(0, 16, sprite_data);
+    set_sprite_data(0, sizeof(sprite_data)/16, sprite_data);
 }
 
 Sprite* alloc_sprite(uint8 sprite_code)
