@@ -63,9 +63,10 @@ def main(args):
 
             layout = layout_map[s['layout']]
             frames = int(s['frames']) if 'frames' in s else 1
-            frames = frames << 8
-            defines.append((s['name'], frames | (layout << 6 | int(start/kTileSize))))
+            code = ((layout << 6 | frames) << 8) | int(start/kTileSize)
+            defines.append((s['name'], code))
 
+            #print("%s: start: %d, %db (%d) : %X" % (s['name'], int(start/kTileSize), len(bin_data), int(len(bin_data)/kTileSize), code))
             start += len(bin_data)
 
     with open(os.path.join(gen_dir, 'sprites.h'), 'w') as sprites:

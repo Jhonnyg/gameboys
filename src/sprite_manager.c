@@ -38,9 +38,9 @@ Sprite* alloc_sprite(unsigned int sprite_code)
     int8 pending_index = 0;
     int8 required_tiles;
 
-    uint8 frames = sprite_code >> 8;
-    uint8 addr = sprite_code & 0x3FU;
-    uint8 layout = sprite_code >> 6 & 0x03;
+    uint8 addr = sprite_code;
+    uint8 frames = (sprite_code >> 8) & 0x3F;
+    uint8 layout = sprite_code >> 13;
     uint8 i;
 
     required_tiles = layout + 1;

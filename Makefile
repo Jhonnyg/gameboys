@@ -42,9 +42,6 @@ $(GEN)/sprites.h: $(OUT)/pack_sprites.py assets/config.json $(BINS)
 $(GEN)/sprite_data.c: $(OUT)/pack_sprites.py assets/config.json $(BINS)
 	mkdir -p $(GEN)
 	$(PYTHON) build/pack_sprites.py
-$(GEN)/sprite_data.h: $(OUT)/pack_sprites.py assets/config.json $(BINS)
-	mkdir -p $(GEN)
-	$(PYTHON) build/pack_sprites.py
 
 $(OUT)/%.o: src/%.asm
 	$(CC) $(CCFLAGS) -c -o $@ $<
