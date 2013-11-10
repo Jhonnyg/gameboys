@@ -60,4 +60,4 @@ $(TARGET): $(OBJECTS) build/sprite_data.o
 	$(CC) $(LDFLAGS) -o $@ $^
 
 clean:
-	rm -f $(OUT)/*.gb $(OUT)/*.o $(GEN)/*
+	rm -rf $(OUT)/*.gb $(OUT)/*.o $(OUT)/*.lst $(OUT)/*.map $(OUT)/*.sym $(GEN)
