@@ -1,5 +1,5 @@
 { "sprites": [
-    { "name" : "DUDETTE", "file_name" : "dudette.bin", "layout": "16x16"},
+    { "name" : "DUDETTE", "file_name" : "dudette.bin", "layout": "16x16", "frames" : 8},
 
     { "name" : "DUDETTE_WALK_LEFT", "file_name" : "dudette_walk_left.bin", "layout": "16x16", "frames" : 7},
     { "name" : "DUDETTE_WALK_RIGHT", "file_name" : "dudette_walk_right.bin", "layout": "16x16", "frames" : 7},
