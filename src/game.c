@@ -6,9 +6,12 @@
 #include "input.h"
 #include "sound.h"
 #include "text.h"
+#include "splash.h"
 
 /* music includes */
 #include "gbt_player.h"
+
+#include "assert.h"
 
 extern const unsigned char * test_Data[];
 
@@ -51,8 +54,9 @@ void init_background()
 void main()
 {
     /* martin timell tells the time */
-    int frame = 0;
+    unsigned int frame = 0;
     int fx_cnt = 0;
+
     Sprite* gubbe;
     Sprite* snubbe;
     Sprite* sture;
@@ -61,9 +65,13 @@ void main()
     BGP_REG = OBP0_REG = OBP1_REG = 0xE4U;
 
     init_sprites();
-    gubbe = alloc_sprite(GUBBE);
+
+    run_splash();
+
+    gubbe = alloc_sprite(LITEN_GUBBE);
     snubbe = alloc_sprite(GUBBE);
     sture = alloc_sprite(DUMLE);
+
 
     put_sprite(gubbe, 30, 30);
     put_sprite(snubbe, 60, 60);
@@ -81,8 +89,8 @@ void main()
 
     enable_interrupts();
 
-    update_sprites();
-    draw_text("Banana PANIC!");
+    update_sprites(frame);
+    /*draw_text("Banana PANIC!");*/
 
     /* music init & run */    
 
@@ -108,12 +116,12 @@ void main()
          * IS_RELEASED - is key released this frame?
          */
 
-        // if ( IS_PRESSED(key_b) )        printf("g: %x\n", gubbe->id);
+        if ( IS_PRESSED(key_b) )       start_animation(gubbe, 0);
         /*else if ( IS_RELEASED(key_b) )  draw_sprite();*/
 
         if (IS_PRESSED(key_start)) {
             free_sprite(gubbe);
-            gubbe = alloc_sprite(GUBBE);
+            gubbe = alloc_sprite(LITEN_GUBBE);
             put_sprite(gubbe, 90, 90);
         }
         /*else if ( IS_RELEASED(key_start) )  draw_sprite();*/
@@ -134,22 +142,8 @@ void main()
         if ( IS_DOWN(key_left) )         shift_sprite(gubbe, -2, 0);
         /*[>else if ( IS_RELEASED(key_left) )  draw_sprite();<]*/
 
-        if ( IS_DOWN(key_right) )        shift_sprite(gubbe, 2, 0);
-        /*else if ( IS_RELEASED(key_right) )  draw_sprite();*/
-
-
-        if (IS_PRESSED(key_start))
-        {
-            draw_text("PLAY SOUND BRO");
-
-            // play_effect( SOUND_FX_TEST );
-            play_effect( (fx_cnt++) % 3 );
-        }
-
-        /*draw_sprite(0);*/
-        update_sprites();
-
         frame++;
+
+        /* Git auto-merge removed everything below this point. /Jhonny */
     }
 }
-
