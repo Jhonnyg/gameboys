@@ -20,7 +20,7 @@ def extend(a,b):
 
 tileSize = 8
 items 	 = {
-	"ITEM_WALL"  : { "probability" : 0.6, "printchar" : "#" },
+	"ITEM_WALL"  : { "probability" : 0.4, "printchar" : "#" },
 	"ITEM_FLOOR" : { "probability" : 0.55, "printchar" : "." }
 }
 
@@ -40,6 +40,10 @@ class Dungeon(object):
 	def Build( self, chunks = 0 ):
 		print("Building " + self.name + ":")
 
+		wall = items["ITEM_WALL"]["printchar"]
+		floor = items["ITEM_FLOOR"]["printchar"]
+
+		# helpers
 		def get_neighbours(chunk,x,y):
 			max_w = len( chunk )
 			max_h = len( chunk[0] )
@@ -55,6 +59,17 @@ class Dungeon(object):
 					nlist.append( chunk[xi][yi] )
 
 			return nlist
+
+		def get_by_type(tile,num_walls):
+			if tile == items["ITEM_WALL"]["printchar"]:
+				if num_walls >= 4:
+					return wall
+				if num_walls < 2:
+					return floor
+			else:
+				if num_walls >= 5:
+					return wall
+			return floor
 
 
 		for c in range(chunks):
@@ -96,6 +111,10 @@ class Dungeon(object):
 						num_walls  = len([ x for x in neighbours if x == items["ITEM_WALL"]["printchar"] ])
 						num_floor  = num_neighs - num_walls
 
+						chunk_row[ch] = get_by_type(cell_item,num_walls)
+
+
+						"""
 						if cell_item == items["ITEM_WALL"]["printchar"]:
 							acceptrate = int((4.0/9.0) * num_neighs)
 						else:
@@ -105,13 +124,7 @@ class Dungeon(object):
 							chunk_row[ch] = items["ITEM_WALL"]["printchar"]
 						else:
 							chunk_row[ch] = items["ITEM_FLOOR"]["printchar"]
-				# print("")
-				# print("After chunk[%d].iteration : %d" % (c,r))
-				# self.PrettyPrint()
-
-				# raw_input()
-
-			# for itype,item in self.config["items"]:
+						"""
 				
 
 	def PrettyPrint(self):
