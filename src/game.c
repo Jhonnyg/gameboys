@@ -11,6 +11,8 @@
 /* music includes */
 #include "gbt_player.h"
 
+#include "assert.h"
+
 extern const unsigned char * test_Data[];
 
 /* keyboard state stored in input.c */
@@ -52,7 +54,7 @@ void init_background()
 void main()
 {
     /* martin timell tells the time */
-    int frame = 0;
+    unsigned int frame = 0;
     Sprite* gubbe;
     Sprite* snubbe;
     Sprite* sture;
@@ -64,9 +66,10 @@ void main()
 
     run_splash();
 
-    gubbe = alloc_sprite(GUBBE);
+    gubbe = alloc_sprite(LITEN_GUBBE);
     snubbe = alloc_sprite(GUBBE);
     sture = alloc_sprite(DUMLE);
+
 
     put_sprite(gubbe, 30, 30);
     put_sprite(snubbe, 60, 60);
@@ -80,14 +83,14 @@ void main()
     /* set background */
     // init_background();
 
-    SOUND_ON; 
+    SOUND_ON;
 
     DISPLAY_ON;
 
     enable_interrupts();
 
-    update_sprites();
-    draw_text("Banana PANIC!");
+    update_sprites(frame);
+    /*draw_text("Banana PANIC!");*/
 
     /* music init & run */
 
@@ -111,12 +114,12 @@ void main()
          * IS_RELEASED - is key released this frame?
          */
 
-        if ( IS_PRESSED(key_b) )        printf("g: %x\n", gubbe->id);
+        if ( IS_PRESSED(key_b) )       start_animation(gubbe, 0);
         /*else if ( IS_RELEASED(key_b) )  draw_sprite();*/
 
         if (IS_PRESSED(key_start)) {
             free_sprite(gubbe);
-            gubbe = alloc_sprite(GUBBE);
+            gubbe = alloc_sprite(LITEN_GUBBE);
             put_sprite(gubbe, 90, 90);
         }
         /*else if ( IS_RELEASED(key_start) )  draw_sprite();*/
@@ -141,11 +144,15 @@ void main()
         /*else if ( IS_RELEASED(key_right) )  draw_sprite();*/
 
 
-        if (IS_PRESSED(key_a))
+        if (IS_PRESSED(key_a)) {
             play_effect( SOUND_FX_TEST );
+            /*start_animation(gubbe, 1);*/
+            stop_animation(gubbe);
+        }
+
 
         /*draw_sprite(0);*/
-        update_sprites();
+        update_sprites(frame);
 
         frame++;
     }

@@ -21,12 +21,14 @@ typedef struct s_sprite Sprite;
 struct s_sprite {
     int8 id;
 
-    int8 visible;
+    int8 flags;
 
     uint8 x;
     uint8 y;
 
     enum SpriteLayout layout;
+    uint8 frames;
+    uint8 current_frame;
 
     int8 tiles[4];
 };
@@ -39,15 +41,18 @@ void init_sprites();
  * Returns -1 when :(
  */
 
-Sprite* alloc_sprite(uint8 sprite_code);
+Sprite* alloc_sprite(unsigned int sprite_code);
 void free_sprite(Sprite* sprite);
 
 void show_sprite(Sprite* sprite);
 void hide_sprite(Sprite* sprite);
 
+void start_animation(Sprite* sprite, int8 once);
+void stop_animation(Sprite* sprite);
+
 void shift_sprite(Sprite* sprite, int dx, int dy);
 void put_sprite(Sprite* sprite, int x, int y);
 
-void update_sprites();
+void update_sprites(unsigned int frame);
 
 #endif  // SPRITE_MANAGER_H_

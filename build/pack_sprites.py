@@ -62,13 +62,15 @@ def main(args):
             tile_data += bin_data
 
             layout = layout_map[s['layout']]
-            defines.append((s['name'], (layout << 6) | int(start/kTileSize)))
+            frames = int(s['frames']) if 'frames' in s else 1
+            frames = frames << 8
+            defines.append((s['name'], frames | (layout << 6 | int(start/kTileSize))))
 
             start += len(bin_data)
 
     with open(os.path.join(gen_dir, 'sprites.h'), 'w') as sprites:
         sprites.write("#ifndef SPRITES_H_\n#define SPRITES_H_\n\n")
-        sprites.writelines(["#define %s 0x%02X\n" % (name, layout) for (name, layout) in defines])
+        sprites.writelines(["#define %s 0x%04X\n" % (name, layout) for (name, layout) in defines])
         sprites.write("\n#endif  // SPRITES_H_\n\n")
 
     with open(os.path.join(gen_dir, 'sprite_data.h'), 'w') as sprite_data:

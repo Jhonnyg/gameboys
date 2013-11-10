@@ -52,7 +52,7 @@ void run_splash()
 			shift_sprite(ddL, -1, 0);
 			shift_sprite(ddR, -1, 0);
 		}
-		update_sprites();
+		update_sprites(0);
 		count--;
 	}
 
