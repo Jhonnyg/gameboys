@@ -53,6 +53,7 @@ void main()
 
     init_sprites();
 
+    SWITCH_ROM_MBC1(5);
     run_splash();
 
     gubbe = alloc_sprite(DUDETTE);
