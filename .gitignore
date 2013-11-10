@@ -1,6 +1,6 @@
 build/gen
 build/*.gb
-tools/gbtd.ini
+tools/*.ini
 *.lst
 *.map
 *.sym
