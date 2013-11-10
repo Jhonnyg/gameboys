@@ -21,7 +21,6 @@ enum TileType
 	POWERUP
 };
 
-// 1: true, 0: false
 uint8 collides(World* w, Player* p);
 
 #endif
