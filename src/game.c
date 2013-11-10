@@ -142,8 +142,20 @@ void main()
         if ( IS_DOWN(key_left) )         shift_sprite(gubbe, -2, 0);
         /*[>else if ( IS_RELEASED(key_left) )  draw_sprite();<]*/
 
-        frame++;
+        if ( IS_DOWN(key_right) )        shift_sprite(gubbe, 2, 0);
+        /*else if ( IS_RELEASED(key_right) )  draw_sprite();*/
 
-        /* Git auto-merge removed everything below this point. /Jhonny */
+
+        if (IS_PRESSED(key_a)) {
+            play_effect( SOUND_FX_TEST );
+            /*start_animation(gubbe, 1);*/
+            stop_animation(gubbe);
+        }
+
+
+        /*draw_sprite(0);*/
+        update_sprites(frame);
+
+        frame++;
     }
 }
