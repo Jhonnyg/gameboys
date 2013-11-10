@@ -25,13 +25,7 @@ items 	 = {
 }
 
 defaultDungeonConfig 	= { "refinementSteps" : 8, "items" : { "ITEM_WALL", "ITEM_FLOOR" }  } # todo: add items
-defaultDungeonGenerator = { "numdungs" : 1, 
-							"numchunks" : 1,
-							"minchunkdimW" : len(sys.argv) > 1 and int(sys.argv[1]) or 20,
-							"maxchunkdimW" : len(sys.argv) > 2 and int(sys.argv[2]) or 40,
-							"minchunkdimH" : len(sys.argv) > 3 and int(sys.argv[3]) or 18,
-							"maxchunkdimH" : len(sys.argv) > 4 and int(sys.argv[4]) or 36,
-							 }
+defaultDungeonGenerator = { "numdungs" : 1, "numchunks" : 1 }
 
 class Dungeon(object):
 	"""docstring for Dungeon"""
@@ -140,11 +134,24 @@ class Dungeon(object):
 
 print("Running Gameboy's Dungeon Generator 1.0")
 print("---------------------------------------")
-print("Settings")
-print("  #Dungeons       : %s" % defaultDungeonGenerator["numdungs"])
-print("  #Dungeon.chunks : %s" % defaultDungeonGenerator["numchunks"])
-print("---------------------------------------")
-print("")
+
+if len(sys.argv) > 1 and sys.argv[1].startswith("-h"):
+	print("Usage: dungeon_gen.py min_dungeon_width max_dungeon_width min_dungeon_height max_dungeon_height")
+	print("Example: dungeon_gen.py 100 200 100 200")
+	sys.exit(0)
+else:
+
+	extend( defaultDungeonGenerator, 
+			{"minchunkdimW" : len(sys.argv) > 1 and int(sys.argv[1]) or 20,
+ 			 "maxchunkdimW" : len(sys.argv) > 2 and int(sys.argv[2]) or 40,
+			 "minchunkdimH" : len(sys.argv) > 3 and int(sys.argv[3]) or 18,
+			 "maxchunkdimH" : len(sys.argv) > 4 and int(sys.argv[4]) or 36,})
+
+	print("Settings")
+	print("  #Dungeons       : %s" % defaultDungeonGenerator["numdungs"])
+	print("  #Dungeon.chunks : %s" % defaultDungeonGenerator["numchunks"])
+	print("---------------------------------------")
+	print("")
 
 for d in range(defaultDungeonGenerator["numdungs"]):
 	dung = Dungeon( "Dungeon_%d" % d )
