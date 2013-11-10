@@ -48,6 +48,7 @@ void show_sprite(Sprite* sprite);
 void hide_sprite(Sprite* sprite);
 
 void start_animation(Sprite* sprite, int8 once);
+void finish_animation(Sprite* sprite);
 void stop_animation(Sprite* sprite);
 
 void shift_sprite(Sprite* sprite, int dx, int dy);

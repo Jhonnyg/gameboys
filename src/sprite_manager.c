@@ -165,6 +165,11 @@ void start_animation(Sprite* sprite, int8 once)
     sprite->flags |= FLAGS_ANIMATING | FLAGS_ANIMATE_INIT | (once ? FLAGS_ANIMATE_ONCE : 0);
 }
 
+void finish_animation(Sprite* sprite)
+{
+    sprite->flags |= FLAGS_ANIMATE_ONCE;
+}
+
 void stop_animation(Sprite* sprite)
 {
     int8 step;

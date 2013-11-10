@@ -151,7 +151,7 @@ void main()
         if (IS_PRESSED(key_a)) {
             play_effect( SOUND_FX_TEST );
             /*start_animation(gubbe, 1);*/
-            stop_animation(gubbe);
+            finish_animation(gubbe);
         }
 
 
