@@ -18,15 +18,18 @@ release: $(TARGET)
 C_SOURCES = $(notdir $(wildcard src/*.c assets/*.c))
 ASM_SOURCES = $(notdir $(wildcard src/*.asm))
 OBJECTS = $(addprefix $(OUT)/, $(C_SOURCES:%.c=%.o) $(ASM_SOURCES:%.asm=%.o))
+BINS = $(wildcard assets/*.bin)
+
 
 # Custom dependencies
+$(OUT)/splash.o: $(GEN)/sprites.h
 $(OUT)/game.o: $(GEN)/sprites.h
 $(OUT)/sprite_manager.o: $(GEN)/sprite_data.h
 
-$(GEN)/sprites.h: $(OUT)/pack_sprites.py assets/config.json
+$(GEN)/sprites.h: $(OUT)/pack_sprites.py assets/config.json $(BINS)
 	mkdir -p $(GEN)
 	$(PYTHON) build/pack_sprites.py
-$(GEN)/sprite_data.h: $(OUT)/pack_sprites.py assets/config.json
+$(GEN)/sprite_data.h: $(OUT)/pack_sprites.py assets/config.json $(BINS)
 	mkdir -p $(GEN)
 	$(PYTHON) build/pack_sprites.py
 
