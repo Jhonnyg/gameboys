@@ -113,49 +113,42 @@ void main()
          */
 
         if ( IS_PRESSED(key_b) )       start_animation(gubbe, 0);
-        /*else if ( IS_RELEASED(key_b) )  draw_sprite();*/
 
         if (IS_PRESSED(key_start)) {
             free_sprite(gubbe);
             gubbe = alloc_sprite(LITEN_GUMMA);
             put_sprite(gubbe, 90, 90);
         }
-        /*else if ( IS_RELEASED(key_start) )  draw_sprite();*/
 
         if (IS_PRESSED(key_select)) {
             free_sprite(gubbe);
             gubbe = alloc_sprite(DUMLE);
             put_sprite(gubbe, 90, 90);
         }
-        /*else if ( IS_RELEASED(key_select) )  draw_sprite();*/
 
         if ( IS_DOWN(key_up) )
         {
             shift_sprite(gubbe, 0, -2);
             scroll_bkg(0, -2);
-        }
-        /*[>else if ( IS_RELEASED(key_up) )  draw_sprite();<]*/
+        } 
 
         if ( IS_DOWN(key_down) )
         {
             shift_sprite(gubbe, 0, 2);
             scroll_bkg(0, 2);
         }
-        /*[>else if ( IS_RELEASED(key_down) )  draw_sprite();<]*/
 
         if ( IS_DOWN(key_left) )
         {
             shift_sprite(gubbe, -2, 0);
             scroll_bkg(-2, 0);
         }
-        /*[>else if ( IS_RELEASED(key_left) )  draw_sprite();<]*/
 
         if ( IS_DOWN(key_right) )
         {
             shift_sprite(gubbe, 2, 0);
             scroll_bkg(2, 0);
         }
-        /*else if ( IS_RELEASED(key_right) )  draw_sprite();*/
 
         /*draw_sprite(0);*/
         update_sprites(frame);
