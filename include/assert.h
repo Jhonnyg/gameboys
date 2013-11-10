@@ -6,17 +6,15 @@
 #include <gb/drawing.h>
 #include <stdlib.h>
 
-#define NOT_REACHED ASSERT(FALSE)
+#define NOT_REACHED ASSERT_MSG(FALSE, "UNREACHABLE")
 
-#define ASSERT(cond) \
-    if (!cond) { \
-        gprintf("%s:%d: ERROR" , __FILE__, __LINE__); \
-        exit(-1); \
-    }
+#define ASSERT(cond) ASSERT_MSG(cond, "ASSERTION ERROR")
 
 #define ASSERT_MSG(cond, msg) \
     if (!cond) { \
-        gprintf("%s:%d: %s" , __FILE__, __LINE__, msg); \
+        gprintf("%s:", __FILE__); \
+        gprintln(__LINE__, 10, 0); \
+        gprintf(": %s", msg); \
         exit(-1); \
     }
 

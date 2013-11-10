@@ -4,7 +4,7 @@
 #include <string.h>
 
 #include "assert.h"
-#include "sprite_data.h"
+#include "sprites.h"
 #include "quirks.h"
 
 #define FLAGS_VISIBLE 0x01
@@ -38,9 +38,9 @@ Sprite* alloc_sprite(unsigned int sprite_code)
     int8 pending_index = 0;
     int8 required_tiles;
 
-    uint8 frames = sprite_code >> 8;
-    uint8 addr = sprite_code & 0x3FU;
-    uint8 layout = sprite_code >> 6 & 0x03;
+    uint8 addr = sprite_code;
+    uint8 frames = (sprite_code >> 8) & 0x3F;
+    uint8 layout = sprite_code >> 13;
     uint8 i;
 
     required_tiles = layout + 1;
@@ -162,7 +162,16 @@ void hide_sprite(Sprite* sprite)
 
 void start_animation(Sprite* sprite, int8 once)
 {
+    if (sprite->frames == 1)
+        return;
+
     sprite->flags |= FLAGS_ANIMATING | FLAGS_ANIMATE_INIT | (once ? FLAGS_ANIMATE_ONCE : 0);
+}
+
+void finish_animation(Sprite* sprite)
+{
+    if (sprite->flags & FLAGS_ANIMATING)
+        sprite->flags |= FLAGS_ANIMATE_ONCE;
 }
 
 void stop_animation(Sprite* sprite)
@@ -219,7 +228,7 @@ void update_sprites(unsigned int frame)
 {
     uint8 i;
     uint8 tile_addr;
-    uint8 step = 1;
+    int8 step = 1;
     int base_x;
     int base_y;
 
@@ -254,6 +263,7 @@ void update_sprites(unsigned int frame)
 
         if ((sprites[i].flags & FLAGS_ANIMATING) && frame % 5 == 0) {
 
+            step = 1;
             if (sprites[i].current_frame == 0) {
                 step = 0;
             } else if (sprites[i].current_frame == sprites[i].frames) {
@@ -290,23 +300,21 @@ void update_sprites(unsigned int frame)
             }
 
             sprites[i].current_frame += 1;
+        }
 
-        } else {
-            sprites[i].flags &= ~FLAGS_ANIMATE_INIT;
-            move_sprite(sprites[i].tiles[0], base_x, base_y);
+        move_sprite(sprites[i].tiles[0], base_x, base_y);
 
-            switch (sprites[i].layout)
-            {
-                case SPRITE16x8:
-                    move_sprite(sprites[i].tiles[1], base_x+8, base_y);
-                    break;
-                case SPRITE16x16:
-                    move_sprite(sprites[i].tiles[2], base_x+8, base_y);
-                    move_sprite(sprites[i].tiles[3], base_x+8, base_y+8);
-                case SPRITE8x16:
-                    move_sprite(sprites[i].tiles[1], base_x, base_y+8);
+        switch (sprites[i].layout)
+        {
+            case SPRITE16x8:
+                move_sprite(sprites[i].tiles[1], base_x+8, base_y);
+                break;
+            case SPRITE16x16:
+                move_sprite(sprites[i].tiles[2], base_x+8, base_y);
+                move_sprite(sprites[i].tiles[3], base_x+8, base_y+8);
+            case SPRITE8x16:
+                move_sprite(sprites[i].tiles[1], base_x, base_y+8);
 
-            }
         }
     }
 }

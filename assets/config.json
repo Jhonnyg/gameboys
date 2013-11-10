@@ -1,6 +1,8 @@
 { "sprites": [
+    { "name" : "DUDETTE", "file_name" : "dudette.bin", "layout": "16x16"},
+    { "name" : "TJEJ", "file_name" : "tjej.bin", "layout": "16x16", "frames": 3},
     { "name" : "LITEN_GUBBE", "file_name" : "liten_gubbe.bin", "layout": "8x16", "frames" : 5 },
-    { "name" : "LITEN_GUMMA", "file_name" : "liten_gumma_med_skugga.bin", "layout": "8x16" },
+    { "name" : "LITEN_GUMMA", "file_name" : "liten_gumma_med_skugga.bin", "layout": "8x16", "frames" : 4 },
     { "name" : "GAMEBOYS_L", "file_name" : "gameboys_left.bin", "layout": "16x16" },
     { "name" : "GAMEBOYS_R", "file_name" : "gameboys_right.bin", "layout": "16x16" },
     { "name" : "PRESENTS_L", "file_name" : "presents_left.bin", "layout": "16x16" },

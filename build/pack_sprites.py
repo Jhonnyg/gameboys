@@ -63,20 +63,20 @@ def main(args):
 
             layout = layout_map[s['layout']]
             frames = int(s['frames']) if 'frames' in s else 1
-            frames = frames << 8
-            defines.append((s['name'], frames | (layout << 6 | int(start/kTileSize))))
+            code = ((layout << 6 | frames) << 8) | int(start/kTileSize)
+            defines.append((s['name'], code))
 
+            #print("%s: start: %d, %db (%d) : %X" % (s['name'], int(start/kTileSize), len(bin_data), int(len(bin_data)/kTileSize), code))
             start += len(bin_data)
 
     with open(os.path.join(gen_dir, 'sprites.h'), 'w') as sprites:
         sprites.write("#ifndef SPRITES_H_\n#define SPRITES_H_\n\n")
         sprites.writelines(["#define %s 0x%04X\n" % (name, layout) for (name, layout) in defines])
+        sprites.write("\nextern const unsigned char sprite_data[];\n")
         sprites.write("\n#endif  // SPRITES_H_\n\n")
 
-    with open(os.path.join(gen_dir, 'sprite_data.h'), 'w') as sprite_data:
-        sprite_data.write("#ifndef SPRITE_DATA_H_\n#define SPRITE_DATA_H_\n\n")
+    with open(os.path.join(gen_dir, 'sprite_data.c'), 'w') as sprite_data:
         sprite_data.write(hexify('sprite_data', tile_data))
-        sprite_data.write("\n#endif  // SPRITE_DATA_H_\n\n")
 
 
 if __name__ == '__main__':
