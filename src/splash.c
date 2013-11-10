@@ -24,23 +24,30 @@ void run_splash()
 	put_sprite(gbR, 144 + 16, 40);
 	put_sprite(gobbe, 138, 42);
 
-	put_sprite(prL, 144, 70);
-	put_sprite(prR, 144 + 16, 70);
+	put_sprite(prL, 144 + 8, 52);
+	put_sprite(prR, 144 + 16 + 8, 52);
 
-	put_sprite(ddL, 144, 100);
-	put_sprite(ddR, 144 + 16, 100);
+	put_sprite(ddL, 154 + 16, 70);
+	put_sprite(ddR, 154 + 16 + 16, 70);
 
-	count = 128;
+	count = 256;
 	while(count > 0)
 	{
 		wait_vbl_done();
-		shift_sprite(gbL, -1, 0);
-		shift_sprite(gbR, -1, 0);
-		shift_sprite(gobbe, -1, 0);
-		shift_sprite(prL, -1, 0);
-		shift_sprite(prR, -1, 0);
-		shift_sprite(ddL, -1, 0);
-		shift_sprite(ddR, -1, 0);
+		if (gbL->x > 70)
+		{
+			shift_sprite(gbL, -1, 0);
+			shift_sprite(gbR, -1, 0);
+			shift_sprite(gobbe, -1, 0);
+
+			shift_sprite(prL, -1, 0);
+			shift_sprite(prR, -1, 0);
+		}
+		if (gbL->x < 90 && ddL->x > 80)
+		{
+			shift_sprite(ddL, -1, 0);
+			shift_sprite(ddR, -1, 0);
+		}
 		update_sprites();
 		count--;
 	}
@@ -50,7 +57,7 @@ void run_splash()
 	free_sprite(prL);
 	free_sprite(prR);
 	free_sprite(ddL);
-	free_sprite(ddL);
+	free_sprite(ddR);
 	free_sprite(gobbe);
 
 	return;
