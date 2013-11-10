@@ -7,6 +7,7 @@
 #include "sound.h"
 #include "text.h"
 #include "splash.h"
+#include "map.h"
 
 /* music includes */
 #include "gbt_player.h"
@@ -33,22 +34,6 @@ extern int key_right;
 /*#define S_GONADS (0xC4U)*/
 /*#define S_EARTH0 (0xC8U)*/
 /*#define S_EARTH1 (0xCCU)*/
-
-void init_background()
-{
-    int i = 0, j = 0;
-    unsigned char _bktiles = { 1 };
-
-    /*set_bkg_data( 1,1, sprite_gonads );*/
-
-    /* draw amazing background sprite 01 */
-    /*for(i = 0; i < 16; i+=16)*/
-        /*for(j = 0; j < 16; j+=16)*/
-            /*set_bkg_tiles(i, j, 1, 1, _bktiles);*/
-
-    /*[> display 2 screen <]*/
-    /*SHOW_BKG;*/
-}
 
 
 void main()
@@ -93,7 +78,7 @@ void main()
     // LCDC_REG = 0x67;
 
     /* set background */
-    // init_background();
+    init_background();
 
     DISPLAY_ON;
 
@@ -143,24 +128,33 @@ void main()
         }
         /*else if ( IS_RELEASED(key_select) )  draw_sprite();*/
 
-        if ( IS_DOWN(key_up) )        shift_sprite(gubbe, 0, -2);
+        if ( IS_DOWN(key_up) )
+        {
+            shift_sprite(gubbe, 0, -2);
+            scroll_bkg(0, -2);
+        }
         /*[>else if ( IS_RELEASED(key_up) )  draw_sprite();<]*/
 
-        if ( IS_DOWN(key_down) )        shift_sprite(gubbe, 0, 2);
+        if ( IS_DOWN(key_down) )
+        {
+            shift_sprite(gubbe, 0, 2);
+            scroll_bkg(0, 2);
+        }
         /*[>else if ( IS_RELEASED(key_down) )  draw_sprite();<]*/
 
-        if ( IS_DOWN(key_left) )         shift_sprite(gubbe, -2, 0);
+        if ( IS_DOWN(key_left) )
+        {
+            shift_sprite(gubbe, -2, 0);
+            scroll_bkg(-2, 0);
+        }
         /*[>else if ( IS_RELEASED(key_left) )  draw_sprite();<]*/
 
-        if ( IS_DOWN(key_right) )        shift_sprite(gubbe, 2, 0);
-        /*else if ( IS_RELEASED(key_right) )  draw_sprite();*/
-
-
-        if (IS_PRESSED(key_a)) {
-            play_effect( SOUND_FX_TEST );
-            finish_animation(gubbe);
+        if ( IS_DOWN(key_right) )
+        {
+            shift_sprite(gubbe, 2, 0);
+            scroll_bkg(2, 0);
         }
-
+        /*else if ( IS_RELEASED(key_right) )  draw_sprite();*/
 
         /*draw_sprite(0);*/
         update_sprites(frame);
@@ -168,3 +162,4 @@ void main()
         frame++;
     }
 }
+
