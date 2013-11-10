@@ -61,6 +61,7 @@ void main()
     Sprite* snubbe;
     Sprite* sture;
     Sprite* arne;
+    Sprite* ghost;
 
     /* Set palettes */
     BGP_REG = OBP0_REG = OBP1_REG = 0xE4U;
@@ -73,15 +74,18 @@ void main()
     snubbe = alloc_sprite(LITEN_GUBBE);
     sture = alloc_sprite(DUMLE);
     arne = alloc_sprite(LITEN_GUMMA);
+    ghost = alloc_sprite(GHOST);
 
 
     put_sprite(gubbe, 30, 30);
     put_sprite(snubbe, 60, 60);
     put_sprite(sture, 60, 90);
     put_sprite(arne, 90, 90);
+    put_sprite(ghost, 110, 90);
 
     start_animation(snubbe, 0);
     start_animation(arne, 0);
+    start_animation(ghost, 0);
 
     /* pre-draw setup code */
     // disable_interrupts();
