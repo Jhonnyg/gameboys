@@ -11,9 +11,9 @@ extern const unsigned char bkgdata[];
 
 const unsigned char _tmpmap[] = {
     0, 0, 0, 0, 0,
-    0, 1, 1, 0, 0,
-    0, 1, 0, 0, 0,
-    0, 0, 0, 0, 0,
+    0, 1, 1, 1, 0,
+    0, 1, 0, 1, 0,
+    0, 0, 0, 1, 0,
     0, 0, 0, 0, 0,
 };
 
@@ -21,7 +21,7 @@ void init_background()
 {
     HIDE_BKG;
     SWITCH_ROM_MBC1(4);
-    set_bkg_data(0, 0x20, bkgdata);
+    set_bkg_data(0, 0x21, bkgdata);
     SHOW_BKG;
 
     generate_visual_map( _tmpmap );
@@ -36,7 +36,7 @@ unsigned char calculate_tile( unsigned char x, unsigned char y, unsigned char* _
 
     if (_map[y * MAP_SIZE + x])
     {
-        return 5; // return if "inside of wall"
+        return 32; // return if "inside of wall"
     }  
 
     if (y > 0 && _map[(y-1) * MAP_SIZE + x]) // top
