@@ -1,13 +1,16 @@
 #include <gb/gb.h>
-#include <stdio.h>
 
 /* game includes */
+#include "sprites.h"
 #include "sprite_manager.h"
 #include "input.h"
 #include "sound.h"
 #include "text.h"
 #include "splash.h"
 #include "map.h"
+#include "quirks.h"
+
+#include "gameplay.h"
 
 /* music includes */
 #include "gbt_player.h"
@@ -28,14 +31,6 @@ extern int key_down;
 extern int key_left;
 extern int key_right;
 
-/* TODO: TEMP YO */
-#include "sprites.h"
-/*#define S_GUBBE (0xC0U)*/
-/*#define S_GONADS (0xC4U)*/
-/*#define S_EARTH0 (0xC8U)*/
-/*#define S_EARTH1 (0xCCU)*/
-
-
 void main()
 {
     /* martin timell tells the time */
@@ -48,13 +43,55 @@ void main()
     Sprite* arne;
     Sprite* ghost;
 
+    Object test_object;
+
+    int8 lol;
+    /*Object* apa;*/
+
+    World* w;
+    Player* p;
+
     /* Set palettes */
     BGP_REG = OBP0_REG = OBP1_REG = 0xE4U;
 
     init_sprites();
 
-    SWITCH_ROM_MBC1(5);
-    run_splash();
+    SWITCH_ROM_MBC1(6);
+
+    w = init_world();
+    p = init_player();
+
+    test_object.type = PICKUP;
+    test_object.pos.x = 40;
+    test_object.pos.y = 40;
+    test_object.hitbox.w = 10;
+    test_object.hitbox.h = 10;
+
+    touch(test_object.pos.x + test_object.pos.y + test_object.hitbox.w + test_object.hitbox.h);
+
+    p->object->pos.x = 35;
+    p->object->pos.y = 35;
+
+
+    touch(p->object->pos.x);
+    touch(p->object->pos.x + p->object->pos.y);
+
+    add_object(w, p->object);
+    add_object(w, &test_object);
+
+
+
+    /*apa = collides(w, p->object);*/
+    /*ASSERT(apa);*/
+
+    /*gprintf("%d  ", test_object.pos.x);*/
+    /*ASSERT(object_collides(p->object, &test_object));*/
+
+    lol = object_collides(p->object, &test_object);
+    /*gprintf("aoeu %d aoue", lol);*/
+
+    /*SWITCH_ROM_MBC1(5);*/
+    /*run_splash();*/
 
     gubbe = alloc_sprite(DUDETTE);
     snubbe = alloc_sprite(LITEN_GUBBE);
@@ -150,7 +187,7 @@ void main()
             scroll_bkg(2, 0);
         }
 
-        /*draw_sprite(0);*/
+        /*[>draw_sprite(0);<]*/
         update_sprites(frame);
 
         frame++;
