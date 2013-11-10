@@ -4,7 +4,7 @@
 #include <string.h>
 
 #include "assert.h"
-#include "sprite_data.h"
+#include "sprites.h"
 #include "quirks.h"
 
 #define FLAGS_VISIBLE 0x01
