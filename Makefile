@@ -12,6 +12,7 @@ TARGET = $(OUT)/$(EXE_NAME)
 all: CC_FLAGS += -DDEBUG
 all: $(TARGET)
 
+release: CC_FLAGS += -DMUSIC_ON
 release: $(TARGET)
 
 $(GEN)/sprites.h: $(OUT)/pack_sprites.py assets/config.json

@@ -52,6 +52,7 @@ void main()
 {
     /* martin timell tells the time */
     int frame = 0;
+    int fx_cnt = 0;
     Sprite* gubbe;
     Sprite* snubbe;
     Sprite* sture;
@@ -76,8 +77,6 @@ void main()
     /* set background */
     // init_background();
 
-    SOUND_ON; 
-
     DISPLAY_ON;
 
     enable_interrupts();
@@ -85,12 +84,14 @@ void main()
     update_sprites();
     draw_text("Banana PANIC!");
 
-    /* music init & run */
+    /* music init & run */    
 
-    gbt_play(test_Data, 2, 7 );
-    gbt_loop(0);
-
-    add_VBL(gbt_update);
+    #ifdef MUSIC_ON
+        SOUND_ON; 
+        gbt_play(test_Data, 2, 7 );
+        gbt_loop(0);
+        add_VBL(gbt_update);
+    #endif
 
     /* gameloop */
     while(1)
@@ -107,7 +108,7 @@ void main()
          * IS_RELEASED - is key released this frame?
          */
 
-        if ( IS_PRESSED(key_b) )        printf("g: %x\n", gubbe->id);
+        // if ( IS_PRESSED(key_b) )        printf("g: %x\n", gubbe->id);
         /*else if ( IS_RELEASED(key_b) )  draw_sprite();*/
 
         if (IS_PRESSED(key_start)) {
@@ -137,8 +138,13 @@ void main()
         /*else if ( IS_RELEASED(key_right) )  draw_sprite();*/
 
 
-        if (IS_PRESSED(key_a))
-            play_effect( SOUND_FX_TEST );
+        if (IS_PRESSED(key_start))
+        {
+            draw_text("PLAY SOUND BRO");
+
+            // play_effect( SOUND_FX_TEST );
+            play_effect( (fx_cnt++) % 3 );
+        }
 
         /*draw_sprite(0);*/
         update_sprites();
