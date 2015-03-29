@@ -124,8 +124,8 @@ class Dungeon(object):
 
 		for c in range(chunks):
 			# build random initial state
-			chunk_width 	= int(random.random() * defaultDungeonGenerator["minchunkdimW"]) + defaultDungeonGenerator["maxchunkdimW"]
-			chunk_height 	= int(random.random() * defaultDungeonGenerator["minchunkdimH"]) + defaultDungeonGenerator["maxchunkdimH"]
+			chunk_width 	= 128 #int(random.random() * defaultDungeonGenerator["minchunkdimW"]) + defaultDungeonGenerator["maxchunkdimW"]
+			chunk_height 	= 128 #int(random.random() * defaultDungeonGenerator["minchunkdimH"]) + defaultDungeonGenerator["maxchunkdimH"]
 
 			print("    %s.chunk[%d] : (%d,%d)" % (self.name, c,chunk_width,chunk_height))
 
