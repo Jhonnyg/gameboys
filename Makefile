@@ -33,12 +33,15 @@ BINS = $(wildcard assets/*.bin)
 $(OUT)/sprite_data.o: CCFLAGS += -Wf-bo3
 $(OUT)/map_data.o: CCFLAGS += -Wf-bo4
 $(OUT)/splash.o: CCFLAGS += -Wf-bo5
+$(OUT)/gameplay.o: CCFLAGS += -Wf-bo6
 
 # Custom dependencies
 $(OUT)/splash.o: $(GEN)/sprites.h
 $(OUT)/game.o: $(GEN)/sprites.h
 $(OUT)/sprite_manager.o: $(GEN)/sprites.h
 $(OUT)/sprite_data.o: $(GEN)/sprite_data.c
+$(OUT)/gameplay.o: $(GEN)/sprites.h
+
 
 $(GEN)/sprites.h: $(OUT)/pack_sprites.py assets/config.json $(BINS)
 	mkdir -p $(GEN)
@@ -60,4 +63,4 @@ $(TARGET): $(OBJECTS) build/sprite_data.o
 	$(CC) $(LDFLAGS) -o $@ $^
 
 clean:
-	rm -f $(OUT)/*.gb $(OUT)/*.o $(GEN)/*
+	rm -rf $(OUT)/*.gb $(OUT)/*.o $(OUT)/*.lst $(OUT)/*.map $(OUT)/*.sym $(GEN)
